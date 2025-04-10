@@ -1,1 +1,117 @@
-<html><head><meta content="text/html; charset=UTF-8" http-equiv="content-type"><style type="text/css">ol{margin:0;padding:0}table td,table th{padding:0}.c1{color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:11pt;font-family:"Arial";font-style:normal}.c0{padding-top:0pt;padding-bottom:0pt;line-height:1.15;orphans:2;widows:2;text-align:left}.c3{background-color:#ffffff;max-width:468pt;padding:72pt 72pt 72pt 72pt}.c2{height:11pt}.title{padding-top:0pt;color:#000000;font-size:26pt;padding-bottom:3pt;font-family:"Arial";line-height:1.15;page-break-after:avoid;orphans:2;widows:2;text-align:left}.subtitle{padding-top:0pt;color:#666666;font-size:15pt;padding-bottom:16pt;font-family:"Arial";line-height:1.15;page-break-after:avoid;orphans:2;widows:2;text-align:left}li{color:#000000;font-size:11pt;font-family:"Arial"}p{margin:0;color:#000000;font-size:11pt;font-family:"Arial"}h1{padding-top:20pt;color:#000000;font-size:20pt;padding-bottom:6pt;font-family:"Arial";line-height:1.15;page-break-after:avoid;orphans:2;widows:2;text-align:left}h2{padding-top:18pt;color:#000000;font-size:16pt;padding-bottom:6pt;font-family:"Arial";line-height:1.15;page-break-after:avoid;orphans:2;widows:2;text-align:left}h3{padding-top:16pt;color:#434343;font-size:14pt;padding-bottom:4pt;font-family:"Arial";line-height:1.15;page-break-after:avoid;orphans:2;widows:2;text-align:left}h4{padding-top:14pt;color:#666666;font-size:12pt;padding-bottom:4pt;font-family:"Arial";line-height:1.15;page-break-after:avoid;orphans:2;widows:2;text-align:left}h5{padding-top:12pt;color:#666666;font-size:11pt;padding-bottom:4pt;font-family:"Arial";line-height:1.15;page-break-after:avoid;orphans:2;widows:2;text-align:left}h6{padding-top:12pt;color:#666666;font-size:11pt;padding-bottom:4pt;font-family:"Arial";line-height:1.15;page-break-after:avoid;font-style:italic;orphans:2;widows:2;text-align:left}</style></head><body class="c3 doc-content"><p class="c0"><span class="c1">&lt;!DOCTYPE html&gt;</span></p><p class="c0"><span class="c1">&lt;html lang=&quot;en&quot;&gt;</span></p><p class="c0"><span class="c1">&lt;head&gt;</span></p><p class="c0"><span class="c1">&nbsp; &lt;meta charset=&quot;UTF-8&quot;&gt;</span></p><p class="c0"><span class="c1">&nbsp; &lt;title&gt;Travelling Salesman Problem Visualizer&lt;/title&gt;</span></p><p class="c0"><span class="c1">&nbsp; &lt;style&gt;</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; canvas {</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; border: 1px solid black;</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; }</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; body {</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; font-family: Arial, sans-serif;</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; text-align: center;</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; }</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; button {</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; margin-top: 10px;</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; padding: 10px 20px;</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; }</span></p><p class="c0"><span class="c1">&nbsp; &lt;/style&gt;</span></p><p class="c0"><span class="c1">&lt;/head&gt;</span></p><p class="c0"><span class="c1">&lt;body&gt;</span></p><p class="c0"><span class="c1">&nbsp; &lt;h2&gt;Travelling Salesman Problem Simulation (Step-by-Step Visualization)&lt;/h2&gt;</span></p><p class="c0"><span class="c1">&nbsp; &lt;canvas id=&quot;tspCanvas&quot; width=&quot;800&quot; height=&quot;600&quot;&gt;&lt;/canvas&gt;</span></p><p class="c0"><span class="c1">&nbsp; &lt;br&gt;</span></p><p class="c0"><span class="c1">&nbsp; &lt;button onclick=&quot;solveTSP()&quot;&gt;Solve TSP&lt;/button&gt;</span></p><p class="c0"><span class="c1">&nbsp; &lt;button onclick=&quot;clearCanvas()&quot;&gt;Clear&lt;/button&gt;</span></p><p class="c0 c2"><span class="c1"></span></p><p class="c0"><span class="c1">&nbsp; &lt;script&gt;</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; const canvas = document.getElementById(&quot;tspCanvas&quot;);</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; const ctx = canvas.getContext(&quot;2d&quot;);</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; const cities = [];</span></p><p class="c0 c2"><span class="c1"></span></p><p class="c0"><span class="c1">&nbsp; &nbsp; canvas.addEventListener(&quot;click&quot;, function(event) {</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; const rect = canvas.getBoundingClientRect();</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; const x = event.clientX - rect.left;</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; const y = event.clientY - rect.top;</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; cities.push({ x, y });</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; drawCities();</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; });</span></p><p class="c0 c2"><span class="c1"></span></p><p class="c0"><span class="c1">&nbsp; &nbsp; function drawCities(path = []) {</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; ctx.clearRect(0, 0, canvas.width, canvas.height);</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; ctx.fillStyle = &quot;blue&quot;;</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; cities.forEach(city =&gt; {</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; &nbsp; ctx.beginPath();</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; &nbsp; ctx.arc(city.x, city.y, 5, 0, Math.PI * 2);</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; &nbsp; ctx.fill();</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; });</span></p><p class="c0 c2"><span class="c1"></span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; if (path.length &gt; 1) {</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; &nbsp; ctx.strokeStyle = &quot;red&quot;;</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; &nbsp; ctx.beginPath();</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; &nbsp; ctx.moveTo(path[0].x, path[0].y);</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; &nbsp; for (let i = 1; i &lt; path.length; i++) {</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ctx.lineTo(path[i].x, path[i].y);</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; &nbsp; }</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; &nbsp; ctx.stroke();</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; }</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; }</span></p><p class="c0 c2"><span class="c1"></span></p><p class="c0"><span class="c1">&nbsp; &nbsp; function distance(a, b) {</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; return Math.hypot(a.x - b.x, a.y - b.y);</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; }</span></p><p class="c0 c2"><span class="c1"></span></p><p class="c0"><span class="c1">&nbsp; &nbsp; function sleep(ms) {</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; return new Promise(resolve =&gt; setTimeout(resolve, ms));</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; }</span></p><p class="c0 c2"><span class="c1"></span></p><p class="c0"><span class="c1">&nbsp; &nbsp; async function solveTSP() {</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; if (cities.length &lt; 2) {</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; &nbsp; alert(&quot;Add at least 2 cities.&quot;);</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; &nbsp; return;</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; }</span></p><p class="c0 c2"><span class="c1"></span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; const unvisited = [...cities];</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; const path = [];</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; let current = unvisited.shift(); // start with the first city</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; path.push(current);</span></p><p class="c0 c2"><span class="c1"></span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; while (unvisited.length &gt; 0) {</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; &nbsp; let nearest = null;</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; &nbsp; let minDist = Infinity;</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; &nbsp; let index = -1;</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; &nbsp; unvisited.forEach((city, i) =&gt; {</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; const d = distance(current, city);</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (d &lt; minDist) {</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; minDist = d;</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; nearest = city;</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; index = i;</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; &nbsp; });</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; &nbsp; current = nearest;</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; &nbsp; unvisited.splice(index, 1); // remove from unvisited</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; &nbsp; path.push(current);</span></p><p class="c0 c2"><span class="c1"></span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; &nbsp; drawCities(path); // draw after each step</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; &nbsp; await sleep(50); // delay for visualization</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; }</span></p><p class="c0 c2"><span class="c1"></span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; // Draw final connection back to start</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; path.push(path[0]);</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; drawCities(path);</span></p><p class="c0 c2"><span class="c1"></span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; const totalDist = path.reduce((sum, city, i) =&gt; {</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; &nbsp; if (i === path.length - 1) return sum;</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; &nbsp; return sum + distance(city, path[i + 1]);</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; }, 0);</span></p><p class="c0 c2"><span class="c1"></span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; alert(`(Approximate) Shortest path length: ${totalDist.toFixed(2)} pixels`);</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; }</span></p><p class="c0 c2"><span class="c1"></span></p><p class="c0"><span class="c1">&nbsp; &nbsp; function clearCanvas() {</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; cities.length = 0;</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; ctx.clearRect(0, 0, canvas.width, canvas.height);</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; }</span></p><p class="c0"><span class="c1">&nbsp; &lt;/script&gt;</span></p><p class="c0"><span class="c1">&lt;/body&gt;</span></p><p class="c0"><span class="c1">&lt;/html&gt;</span></p><p class="c0 c2"><span class="c1"></span></p></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Travelling Salesman Problem Visualizer</title>
+  <style>
+    canvas {
+      border: 1px solid black;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Travelling Salesman Problem Simulation (Step-by-Step Visualization)</h2>
+  <canvas id="tspCanvas" width="800" height="600"></canvas>
+  <br>
+  <button onclick="solveTSP()">Solve TSP</button>
+  <button onclick="clearCanvas()">Clear</button>
+
+  <script>
+    const canvas = document.getElementById("tspCanvas");
+    const ctx = canvas.getContext("2d");
+    const cities = [];
+
+    canvas.addEventListener("click", function(event) {
+      const rect = canvas.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+      cities.push({ x, y });
+      drawCities();
+    });
+
+    function drawCities(path = []) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "blue";
+      cities.forEach(city => {
+        ctx.beginPath();
+        ctx.arc(city.x, city.y, 5, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      if (path.length > 1) {
+        ctx.strokeStyle = "red";
+        ctx.beginPath();
+        ctx.moveTo(path[0].x, path[0].y);
+        for (let i = 1; i < path.length; i++) {
+          ctx.lineTo(path[i].x, path[i].y);
+        }
+        ctx.stroke();
+      }
+    }
+
+    function distance(a, b) {
+      return Math.hypot(a.x - b.x, a.y - b.y);
+    }
+
+    function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function solveTSP() {
+      if (cities.length < 2) {
+        alert("Add at least 2 cities.");
+        return;
+      }
+
+      const unvisited = [...cities];
+      const path = [];
+      let current = unvisited.shift(); // start with the first city
+      path.push(current);
+
+      while (unvisited.length > 0) {
+        let nearest = null;
+        let minDist = Infinity;
+        let index = -1;
+        unvisited.forEach((city, i) => {
+          const d = distance(current, city);
+          if (d < minDist) {
+            minDist = d;
+            nearest = city;
+            index = i;
+          }
+        });
+        current = nearest;
+        unvisited.splice(index, 1); // remove from unvisited
+        path.push(current);
+
+        drawCities(path); // draw after each step
+        await sleep(50); // delay for visualization
+      }
+
+      // Draw final connection back to start
+      path.push(path[0]);
+      drawCities(path);
+
+      const totalDist = path.reduce((sum, city, i) => {
+        if (i === path.length - 1) return sum;
+        return sum + distance(city, path[i + 1]);
+      }, 0);
+
+      alert(`(Approximate) Shortest path length: ${totalDist.toFixed(2)} pixels`);
+    }
+
+    function clearCanvas() {
+      cities.length = 0;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+  </script>
+</body>
+</html>
